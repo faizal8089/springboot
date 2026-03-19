@@ -12,7 +12,7 @@ import lombok.Setter;
 public class ProductItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     private String name;
     private String description;
