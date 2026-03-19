@@ -20,8 +20,8 @@ public class ProductService{
         return productItemRepository.findAll();
     }
 
-    public ProductItem getById(Long Id){
-        return productItemRepository.findById(Id).orElse(null);
+    public ProductItem getById(Long id){
+        return productItemRepository.findById(id).orElse(null);
     }
 
     public ProductItem create(ProductItem productItem){
@@ -45,8 +45,5 @@ public class ProductService{
         productItemRepository.deleteById(id);
         return true;
     }
-
-
-
 
 }
