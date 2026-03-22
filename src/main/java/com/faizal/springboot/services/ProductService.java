@@ -40,9 +40,9 @@ public class ProductService{
 
     public ProductResponseDTO create(ProductRequestDTO request){
         ProductItem productItem = new ProductItem();
-        productItem.setName(request.getName());
-        productItem.setPrice(request.getPrice());
-        productItem.setDescription(request.getDescription());
+        productItem.setName(request.name());
+        productItem.setPrice(request.price());
+        productItem.setDescription(request.description());
         return toResponse(productItemRepository.save(productItem));
     }
 
@@ -61,9 +61,9 @@ public class ProductService{
     public ProductResponseDTO update(Long id, ProductRequestDTO request){
         ProductItem exists = productItemRepository.findById(id).orElse(null);
         if (exists == null) return null;
-        exists.setName(request.getName());
-        exists.setPrice(request.getPrice());
-        exists.setDescription(request.getDescription());
+        exists.setName(request.name());
+        exists.setPrice(request.price());
+        exists.setDescription(request.description());
         return toResponse(productItemRepository.save(exists));
     }
 
@@ -73,12 +73,15 @@ public class ProductService{
         return true;
     }
 
+//    public ProductResponseDTO toResponse(ProductItem productItem){
+//        ProductResponseDTO productResponseDTO = new ProductResponseDTO();
+//        productResponseDTO.setId(productItem.getId());
+//        productResponseDTO.setName(productItem.getName());
+//        productResponseDTO.setDescription(productItem.getDescription());
+//        productResponseDTO.setPrice(productItem.getPrice());
+//        return productResponseDTO;
+//    }
     public ProductResponseDTO toResponse(ProductItem productItem){
-        ProductResponseDTO productResponseDTO = new ProductResponseDTO();
-        productResponseDTO.setId(productItem.getId());
-        productResponseDTO.setName(productItem.getName());
-        productResponseDTO.setDescription(productItem.getDescription());
-        productResponseDTO.setPrice(productItem.getPrice());
-        return productResponseDTO;
+        return new ProductResponseDTO(productItem.getId(), productItem.getName(), productItem.getDescription(), productItem.getPrice());
     }
 }
