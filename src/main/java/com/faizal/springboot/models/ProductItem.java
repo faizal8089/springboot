@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Time;
+
 @Setter
 @Getter
 @Entity
@@ -17,6 +19,7 @@ public class ProductItem {
     private String name;
     private String description;
     private  double price;
+    private Time createdTimeStamp;
 
     public ProductItem(){}
 }
