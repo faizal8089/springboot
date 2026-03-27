@@ -1,11 +1,11 @@
 package com.faizal.springboot.services;
 
 
+import com.faizal.springboot.dto.PriceDTO;
 import com.faizal.springboot.dto.ProductRequestDTO;
 import com.faizal.springboot.dto.ProductResponseDTO;
 import com.faizal.springboot.models.ProductItem;
 import com.faizal.springboot.repository.ProductItemRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -71,6 +71,11 @@ public class ProductService{
         if (!productItemRepository.existsById(id)) return false;
         productItemRepository.deleteById(id);
         return true;
+    }
+
+
+    public PriceDTO toPriceDTO(Long id){
+        return new PriceDTO(productItemRepository.findCustom(id));
     }
 
 //    public ProductResponseDTO toResponse(ProductItem productItem){
