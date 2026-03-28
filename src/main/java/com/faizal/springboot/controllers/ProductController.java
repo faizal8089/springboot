@@ -8,6 +8,7 @@ import com.faizal.springboot.models.ProductItem;
 import com.faizal.springboot.services.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -62,18 +63,20 @@ public class ProductController {
 //        return ResponseEntity.ok(productService.create(request));
 //    }
 @PostMapping
-public ResponseEntity<?> create(@Valid @RequestBody ProductRequestDTO request, BindingResult result) {
+public ResponseEntity<ProductResponseDTO> create(@Valid @RequestBody ProductRequestDTO request) {
     // 1. Check if ANY errors occurred
-    if (result.hasErrors()) {
-        // 2. Log the specific error safely
-        if (result.hasFieldErrors("name")) {
-            System.out.println("Validation Error: " + result.getFieldError("name").getDefaultMessage());
-        }
-        // 3. Return the errors to the user (Postman) so they know what happened
-        return ResponseEntity.badRequest().body(result.getAllErrors());
-    }
-
-    return ResponseEntity.ok(productService.create(request));
+//    if (result.hasErrors()) {
+//        // 2. Log the specific error safely
+//        if (result.hasFieldErrors("name")) {
+//            System.out.println("Validation Error: " + result.getFieldError("name").getDefaultMessage());
+//        }
+//        // 3. Return the errors to the user (Postman) so they know what happened
+//        return ResponseEntity.badRequest().body(result.getAllErrors());
+//    }
+//
+//    return ResponseEntity.ok(productService.create(request));
+    return ResponseEntity.status(HttpStatus.CREATED)
+            .body(productService.create(request));
 }
 
 //    @PutMapping("/{id}")
@@ -84,9 +87,9 @@ public ResponseEntity<?> create(@Valid @RequestBody ProductRequestDTO request, B
 //    }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductResponseDTO> update(@PathVariable Long id, @RequestBody ProductRequestDTO request){
+    public ResponseEntity<ProductResponseDTO> update(@PathVariable Long id,@Valid @RequestBody ProductRequestDTO request){
         ProductResponseDTO updated = productService.update(id, request);
-        if (updated == null) ResponseEntity.notFound().build();
+        if (updated == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(updated);
     }
 
