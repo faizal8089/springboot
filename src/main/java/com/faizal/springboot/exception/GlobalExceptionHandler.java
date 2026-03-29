@@ -19,7 +19,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({MethodArgumentNotValidException.class, ResourceNotFoundException.class})
+    @ExceptionHandler({MethodArgumentNotValidException.class})
     public ResponseEntity<ErrorResponseDTO> handleValidationException(MethodArgumentNotValidException e){
         BindingResult result = e.getBindingResult();
         Map<String, String> errors = new HashMap<>();
@@ -27,6 +27,11 @@ public class GlobalExceptionHandler {
             errors.put(error.getField(), error.getDefaultMessage());
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponseDTO(HttpStatus.BAD_REQUEST.value(), "Invalid arguments", errors));
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponseDTO> ResourceNoTFoundException(ResourceNotFoundException ex){
+        return ResponseEntity.status(404).body(new ErrorResponseDTO(404, ex.getMessage(), null));
     }
 
     @ExceptionHandler(Exception.class)

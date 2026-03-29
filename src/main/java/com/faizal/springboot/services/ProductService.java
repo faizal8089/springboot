@@ -4,6 +4,7 @@ package com.faizal.springboot.services;
 import com.faizal.springboot.dto.PriceDTO;
 import com.faizal.springboot.dto.ProductRequestDTO;
 import com.faizal.springboot.dto.ProductResponseDTO;
+import com.faizal.springboot.exception.ResourceNotFoundException;
 import com.faizal.springboot.models.ProductItem;
 import com.faizal.springboot.repository.ProductItemRepository;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,7 @@ public class ProductService{
 //        return productItemRepository.findById(id).orElse(null);
 //    }
     public ProductResponseDTO getById(Long id){
-        ProductItem productItem = productItemRepository.findById(id).orElse(null);
-        if(productItem == null) return null;
+        ProductItem productItem = productItemRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("No product found for id: "+ id));
         return toResponse(productItem);
     }
 //    public ProductItem create(ProductItem productItem){
@@ -59,8 +59,8 @@ public class ProductService{
 //    }
 
     public ProductResponseDTO update(Long id, ProductRequestDTO request){
-        ProductItem exists = productItemRepository.findById(id).orElse(null);
-        if (exists == null) return null;
+        ProductItem exists = productItemRepository.findById(id).orElseThrow(() ->new ResourceNotFoundException("Product not found with id: "+ id));
+
         exists.setName(request.name());
         exists.setPrice(request.price());
         exists.setDescription(request.description());
