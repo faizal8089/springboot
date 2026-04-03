@@ -22,7 +22,6 @@ public class ProductController {
 
     private final ProductService productService;
 
-    private ProductRequestDTO productRequestDTO;
 
     ProductController(ProductService productService){
         this.productService = productService;

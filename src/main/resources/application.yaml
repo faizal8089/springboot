@@ -1,18 +1,3 @@
-#server.port = 8085
-#
-##spring.datasource.url=jdbc:h2:mem:testdb
-#spring.datasource.url=jdbc:h2:file:./data/sampledb
-#spring.datasource.driver-class-name=org.h2.Driver
-#spring.datasource.username=user
-#spring.datasource.password=
-#
-#spring.jpa.hibernate.ddl-auto=update
-#spring.jpa.show-sql=true
-#
-#spring.h2.console.enabled=true
-#
-#spring.jackson.deserialization.FAIL_ON_UNKNOWN_PROPERTIES=true
-
 server:
   port: 8085
 
@@ -25,11 +10,15 @@ spring:
     password: ""
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     show-sql: true
   h2:
     console:
       enabled: true
   jackson:
+    default-property-inclusion:  non_null
     deserialization:
       fail-on-unknown-properties: true
+jwt:
+  secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+  expiration: 86400000

@@ -30,12 +30,12 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorResponseDTO> ResourceNoTFoundException(ResourceNotFoundException ex){
-        return ResponseEntity.status(404).body(new ErrorResponseDTO(404, ex.getMessage(), null));
+    public ResponseEntity<ErrorResponseDTO> resourceNoTFoundException(ResourceNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponseDTO(HttpStatus.NOT_FOUND.value(), ex.getMessage(), Map.of()));
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponseDTO> GeneralException(Exception ex){
+    public ResponseEntity<ErrorResponseDTO> generalException(Exception ex){
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponseDTO(HttpStatus
                 .INTERNAL_SERVER_ERROR.value(), ex.getMessage(),null));
     }

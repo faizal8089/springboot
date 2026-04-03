@@ -75,7 +75,11 @@ public class ProductService{
 
 
     public PriceDTO toPriceDTO(Long id){
-        return new PriceDTO(productItemRepository.findCustom(id));
+        Double price = productItemRepository.findCustom(id);
+        if (price == null){
+            throw new ResourceNotFoundException("Product not found with id: "+ id);
+        }
+        return new PriceDTO(price);
     }
 
 //    public ProductResponseDTO toResponse(ProductItem productItem){
