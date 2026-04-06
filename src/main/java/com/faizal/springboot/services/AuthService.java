@@ -37,6 +37,12 @@ public class AuthService implements UserDetailsService {
     }
 
     public String register(AuthRequestDTO authRequestDTO){
+
+        // check before inserting
+        if (userRepository.findByEmail(authRequestDTO.email()).isPresent()) {
+            throw new RuntimeException("Email already registered: " + authRequestDTO.email());
+        }
+
         User user = new User();
         user.setName(authRequestDTO.name());
         user.setEmail(authRequestDTO.email());
